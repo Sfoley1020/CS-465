@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var cors = require('cors');
 
 // Deines routers
 var indexRouter = require('./app_server/routes/index');
@@ -30,6 +31,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Enable CORS
+app.use('/api', cors({ origin: 'http://localhost:4200' }));
+
+// Allow additional HTTP verbs (PUT, DELETE, etc.)
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  next();
+});
 
 // wire-up routes to controllers
 app.use('/', indexRouter);
