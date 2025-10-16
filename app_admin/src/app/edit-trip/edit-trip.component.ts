@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { TripDataService } from '../services/trip-data.service';
+import { Trip } from '../models/trip';
 
 @Component({
   selector: 'app-edit-trip',
@@ -12,20 +13,32 @@ import { TripDataService } from '../services/trip-data.service';
   styleUrls: ['./edit-trip.component.css']
 })
 export class EditTripComponent implements OnInit {
-  editForm!: FormGroup;
+  public editForm!: FormGroup;
+  trip!: Trip;
   submitted = false;
+  message: string = '';
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private tripService: TripDataService
+    private tripDataService: TripDataService
   ) {}
 
   ngOnInit(): void {
-    // initialize form
+    // Retrieve stashed trip ID
+    let tripCode = localStorage.getItem('tripCode');
+    if (!tripCode) {
+      alert("Something's wrong, couldn't find where I stashed tripCode!");
+      this.router.navigate(['']);
+      return;
+    }
+
+    console.log('EditTripComponent::ngOnInit');
+    console.log('tripcode:', tripCode);
+
     this.editForm = this.formBuilder.group({
       _id: [],
-      code: ['', Validators.required],
+      code: [tripCode, Validators.required],
       name: ['', Validators.required],
       length: ['', Validators.required],
       start: ['', Validators.required],
@@ -35,38 +48,39 @@ export class EditTripComponent implements OnInit {
       description: ['', Validators.required]
     });
 
-    //  Load the existing trip to edit
-    const tripCode = localStorage.getItem('tripCode');
-    if (tripCode) {
-      this.tripService.getTripByCode(tripCode).subscribe({
-        next: (data: any) => {
-          this.editForm.patchValue(data[0]); // populate form
+    this.tripDataService.getTripByCode(tripCode)
+      .subscribe({
+        next: (value: any) => {
+          this.trip = value;
+          this.editForm.patchValue(value[0]);
+          this.message = value ? `Trip: ${tripCode} retrieved` : 'No Trip Retrieved!';
+          console.log(this.message);
         },
-        error: (error) => console.log('Error loading trip:', error)
+        error: (error: any) => {
+          console.log('Error:', error);
+        }
       });
-    }
   }
 
-  // form controls getter (used by [ngClass])
-  get f() {
-    return this.editForm.controls;
-  }
-
-  //  handle form submission
   public onSubmit(): void {
     this.submitted = true;
 
     if (this.editForm.valid) {
       const tripCode = this.editForm.value.code;
-      this.tripService.updateTrip(tripCode, this.editForm.value).subscribe({
-        next: () => {
-          console.log('Trip updated successfully');
-          this.router.navigate(['']); // return to trip list
-        },
-        error: (error) => {
-          console.log('Error updating trip:', error);
-        }
-      });
+      this.tripDataService.updateTrip(tripCode, this.editForm.value)
+        .subscribe({
+          next: (value: any) => {
+            console.log('Trip updated:', value);
+            this.router.navigate(['']);
+          },
+          error: (error: any) => {
+            console.log('Error updating trip:', error);
+          }
+        });
     }
+  }
+
+  get f() {
+    return this.editForm.controls;
   }
 }

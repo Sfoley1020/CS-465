@@ -6,7 +6,11 @@ var logger = require('morgan');
 var cors = require('cors');
 require('dotenv').config();
 
-// Deines routers
+// Wire in our authentication module
+var passport = require('passport');
+require('./app_api/config/passport');
+
+// Define routers
 var indexRouter = require('./app_server/routes/index');
 var usersRouter = require('./app_server/routes/users');
 var travelRouter = require('./app_server/routes/travel');
@@ -33,12 +37,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Enable CORS
+// ✅ Initialize Passport
+app.use(passport.initialize());
+
+// Enable CORS for Angular frontend
 app.use('/api', cors({ origin: 'http://localhost:4200' }));
 
-// Allow additional HTTP verbs (PUT, DELETE, etc.)
+// ✅ Allow additional HTTP verbs and Authorization header
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
   next();
 });
 
@@ -62,6 +70,15 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+// ✅ Catch unauthorized errors (invalid tokens, etc.)
+app.use((err, req, res, next) => {
+  if (err.name === 'UnauthorizedError') {
+    res
+      .status(401)
+      .json({ "message": err.name + ": " + err.message });
+  }
 });
 
 module.exports = app;

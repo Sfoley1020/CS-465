@@ -10,6 +10,13 @@
     </p>
     <p class="card-text" [innerHTML]="trip.description"></p>
 
-    <button class="btn btn-primary mt-2" (click)="editTrip(trip)">Edit Trip</button>
+    <!-- ✅ Show only if logged in -->
+    <button
+      *ngIf="authService.isLoggedIn()"
+      class="btn btn-primary mt-2"
+      (click)="editTrip(trip)"
+    >
+      Edit Trip
+    </button>
   </div>
 </div>

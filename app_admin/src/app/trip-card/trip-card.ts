@@ -1,25 +1,26 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';   // add CommonModule + CurrencyPipe
 import { Router } from '@angular/router';
 import { Trip } from '../models/trip';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-trip-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CurrencyPipe],   // include them here
   templateUrl: './trip-card.html',
   styleUrls: ['./trip-card.css']
 })
-export class TripCard {
+export class TripCardComponent {
   @Input() trip!: Trip;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    public authService: AuthenticationService
+  ) {}
 
-  editTrip(trip: Trip): void {
-    // Save trip code to localStorage for the EditTrip component to use
+  editTrip(trip: Trip) {
     localStorage.setItem('tripCode', trip.code);
-    console.log('Editing trip:', trip.code);
-    // Navigate to edit-trip route
-    this.router.navigate(['/edit-trip']);
+    this.router.navigate(['/edit-trip', trip.code]);
   }
 }

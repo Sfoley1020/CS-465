@@ -1,5 +1,11 @@
 <div class="mb-3">
-  <button (click)="addTrip()" class="btn btn-info">Add Trip</button>
+  <button
+    *ngIf="authService.isLoggedIn()"
+    (click)="addTrip()"
+    class="btn btn-info"
+  >
+    Add Trip
+  </button>
 </div>
 
 <div class="row g-4">

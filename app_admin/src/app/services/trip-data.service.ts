@@ -1,36 +1,55 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Trip } from '../models/trip';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TripDataService {
-  private url = 'http://localhost:3000/api/trips';  // shared base URL
+  private apiBaseUrl = 'http://localhost:3000/api/';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private authService: AuthenticationService
+  ) {}
 
-  // get all trips
+  // Helper to create headers with JWT
+  private getAuthHeaders(): HttpHeaders {
+    const token = this.authService.getToken();
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+    return headers;
+  }
+
+  // GET all trips (no auth required)
   getTrips(): Observable<Trip[]> {
-    return this.http.get<Trip[]>(this.url);
+    return this.http.get<Trip[]>(`${this.apiBaseUrl}trips`);
   }
 
-  // add a new trip
+  // GET trip by code (for edit)
+  getTripByCode(tripCode: string): Observable<Trip[]> {
+    return this.http.get<Trip[]>(`${this.apiBaseUrl}trips/${tripCode}`);
+  }
+
+  // POST new trip (requires auth)
   addTrip(formData: Trip): Observable<Trip> {
-    return this.http.post<Trip>(this.url, formData);
+    return this.http.post<Trip>(
+      `${this.apiBaseUrl}trips`,
+      formData,
+      { headers: this.getAuthHeaders() }
+    );
   }
 
-  // 🆕 get one trip by its code
-  getTripByCode(tripCode: string): Observable<Trip> {
-    const url = `${this.url}/${tripCode}`;
-    return this.http.get<Trip>(url);
-  }
-
-  // 🆕 update an existing trip
+  // PUT update trip (requires auth)
   updateTrip(tripCode: string, formData: Trip): Observable<Trip> {
-    const url = `${this.url}/${tripCode}`;
-    return this.http.put<Trip>(url, formData);
+    return this.http.put<Trip>(
+      `${this.apiBaseUrl}trips/${tripCode}`,
+      formData,
+      { headers: this.getAuthHeaders() }
+    );
   }
 }
-
