@@ -37,13 +37,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ✅ Initialize Passport
+//  Initialize Passport
 app.use(passport.initialize());
 
 // Enable CORS for Angular frontend
 app.use('/api', cors({ origin: 'http://localhost:4200' }));
 
-// ✅ Allow additional HTTP verbs and Authorization header
+//  Allow additional HTTP verbs and Authorization header
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
@@ -72,7 +72,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-// ✅ Catch unauthorized errors (invalid tokens, etc.)
+//  Catch unauthorized errors (invalid tokens, etc.)
 app.use((err, req, res, next) => {
   if (err.name === 'UnauthorizedError') {
     res
