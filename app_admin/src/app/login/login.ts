@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-login',
@@ -11,28 +12,52 @@ import { AuthenticationService } from '../services/authentication.service';
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
-export class LoginComponent {
-  email: string = '';
-  password: string = '';
-  error: string = '';
+export class Login implements OnInit {
+  public formError: string = '';
+  submitted = false;
+
+  credentials = {
+    name: '',
+    email: '',
+    password: ''
+  };
 
   constructor(
-    private authService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private authenticationService: AuthenticationService
   ) {}
 
-  onSubmit(): void {
-    this.authService.login(this.email, this.password).subscribe({
-      next: (response: any) => {
-        if (response.token) {
-          this.authService.saveToken(response.token);
-          this.router.navigate(['/']); // Redirect to main admin page
-        }
-      },
-      error: (err: any) => {
-        console.error('Login failed:', err);
-        this.error = 'Invalid email or password';
+  ngOnInit(): void {}
+
+  // Handle submit
+  public onLoginSubmit(): void {
+    this.formError = '';
+
+    if (!this.credentials.name || !this.credentials.email || !this.credentials.password) {
+      this.formError = 'All fields are required, please try again.';
+      this.router.navigateByUrl('/login');
+    } else {
+      this.doLogin();
+    }
+  }
+
+  // Perform actual login call
+  private doLogin(): void {
+    const newUser: User = {
+      name: this.credentials.name,
+      email: this.credentials.email
+    };
+
+    // Call backend login endpoint
+    this.authenticationService.login(newUser, this.credentials.password);
+
+    // Wait for token to be saved, then redirect
+    setTimeout(() => {
+      if (this.authenticationService.isLoggedIn()) {
+        this.router.navigate(['']);
+      } else {
+        this.formError = 'Login failed. Please check your credentials.';
       }
-    });
+    }, 2000);
   }
 }

@@ -1,23 +1,7 @@
-<!-- Navbar -->
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">{{ title }}</a>
+<!-- Load the reusable Navbar component -->
+<app-navbar></app-navbar>
 
-    <ul class="nav navbar-nav navbar-right">
-      <!-- Show only when NOT logged in -->
-      <li *ngIf="!auth.isLoggedIn()">
-        <a routerLink="/login">Login</a>
-      </li>
-
-      <!-- Show only when logged in -->
-      <li *ngIf="auth.isLoggedIn()">
-        <a href="#" (click)="logout()">Logout</a>
-      </li>
-    </ul>
-  </div>
-</nav>
-
-<!-- Main container -->
-<div class="container">
+<!-- Main app content -->
+<div class="container mt-3">
   <router-outlet></router-outlet>
 </div>
