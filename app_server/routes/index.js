@@ -2,7 +2,10 @@ var express = require('express');
 var router = express.Router();
 const ctrlMain = require('../controllers/main');
 
-/* GET home page. */
+// Home Page
 router.get('/', ctrlMain.index);
+
+// Travel page route
+router.use('/travel', require('./travel'));
 
 module.exports = router;

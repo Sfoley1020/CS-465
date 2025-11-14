@@ -51,9 +51,9 @@ app.use((req, res, next) => {
 });
 
 // wire-up routes to controllers
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/travel', travelRouter);
+app.use('/users', usersRouter);
+app.use('/', indexRouter);
 app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler
