@@ -14,11 +14,12 @@ function validateTripInput(data) {
         errors.push("Trip name is required.");
     }
 
+    // LENGTH NOW STRING
     if (!data.length || data.length.trim() === "") {
         errors.push("Trip length is required.");
     } else {
         const lengthPattern = /^\s*\d+\s*(night|nights)\s*\/\s*\d+\s*(day|days)\s*$/i;
-        if (!lengthPattern.test(data.length)) {
+        if (!lengthPattern.test(data.length.trim())) {
             errors.push("Trip length must follow format like '4 nights / 5 days'.");
         }
     }

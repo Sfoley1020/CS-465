@@ -2,86 +2,63 @@ import { Inject, Injectable } from '@angular/core';
 import { BROWSER_STORAGE } from '../storage';
 import { User } from '../models/user';
 import { AuthResponse } from '../models/auth-response';
-import { TripDataService } from '../services/trip-data.service';
+import { TripDataService } from './trip-data.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  // Variable to handle Authentication Responses
   authResp: AuthResponse = new AuthResponse();
 
-  // Setup our storage and service access
   constructor(
     @Inject(BROWSER_STORAGE) private storage: Storage,
     private tripDataService: TripDataService
   ) {}
 
-  // Get our token from our Storage provider
   public getToken(): string {
-    const out = this.storage.getItem('travlr-token');
-    return out ? out : '';
+    return this.storage.getItem('travlr-token') || '';
   }
 
-  // Save our token to our Storage provider
   public saveToken(token: string): void {
     this.storage.setItem('travlr-token', token);
   }
 
-  // Logout of our application and remove the JWT from Storage
   public logout(): void {
     this.storage.removeItem('travlr-token');
   }
 
-  // Boolean to determine if we are logged in and token is still valid
+  // Decode full JWT payload including admin flag
+  public getCurrentUser(): any {
+    const token = this.getToken();
+    if (!token) return null;
+
+    try {
+      return JSON.parse(atob(token.split('.')[1]));
+    } catch (e) {
+      return null;
+    }
+  }
+
   public isLoggedIn(): boolean {
-    const token: string = this.getToken();
-    if (token) {
+    const token = this.getToken();
+    if (!token) return false;
+
+    try {
       const payload = JSON.parse(atob(token.split('.')[1]));
       return payload.exp > (Date.now() / 1000);
+    } catch {
+      return false;
     }
-    return false;
   }
 
-  // Retrieve the current user
-  public getCurrentUser(): User {
-    const token: string = this.getToken();
-    const { email, name } = JSON.parse(atob(token.split('.')[1]));
-    return { email, name } as User;
+  // LOGIN now returns Observable so login.ts can subscribe
+  public login(user: User, passwd: string): Observable<AuthResponse> {
+    return this.tripDataService.login(user, passwd);
   }
 
-  // Login method that leverages the login method in tripDataService
-  public login(user: User, passwd: string): void {
-    this.tripDataService.login(user, passwd)
-      .subscribe({
-        next: (value: any) => {
-          if (value) {
-            console.log(value);
-            this.authResp = value;
-            this.saveToken(this.authResp.token);
-          }
-        },
-        error: (error: any) => {
-          console.log('Error: ' + error);
-        }
-      });
-  }
-
-  // Register method that leverages the register method in tripDataService
-  public register(user: User, passwd: string): void {
-    this.tripDataService.register(user, passwd)
-      .subscribe({
-        next: (value: any) => {
-          if (value) {
-            console.log(value);
-            this.authResp = value;
-            this.saveToken(this.authResp.token);
-          }
-        },
-        error: (error: any) => {
-          console.log('Error: ' + error);
-        }
-      });
+  public register(user: User, passwd: string): Observable<AuthResponse> {
+    return this.tripDataService.register(user, passwd);
   }
 }

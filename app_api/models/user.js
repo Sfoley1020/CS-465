@@ -12,6 +12,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  admin: {
+    type: Boolean,
+    default: false
+  },
   hash: String,
   salt: String
 });
@@ -34,7 +38,8 @@ userSchema.methods.generateJWT = function () {
     {
       _id: this._id,
       email: this.email,
-      name: this.name
+      name: this.name,
+      admin: this.admin
     },
     process.env.JWT_SECRET,
     { expiresIn: '1h' }

@@ -10,17 +10,22 @@ passport.use(
             usernameField: "email",
         },
         async (username, password, done) => {
-            const q = await User.findOne({ email: username }).exec();
+            const q = await User.findOne({ email: username })
+                .select("email name hash salt admin")
+                .exec();
+
             if (!q) {
-                return done(null,false, {
+                return done(null, false, {
                     message: "Incorrect username.",
                 });
             }
+
             if (!q.validPassword(password)) {
                 return done(null, false, {
                     message: "Incorrect password.",
                 });
             }
+
             return done(null, q);
         }
     )

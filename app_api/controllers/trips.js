@@ -49,7 +49,7 @@ const tripsAddTrip = async (req, res) => {
 };
 
 // PUT: /trips/:tripCode - update an existing trip
-// Also enhanced with centralized validation + shared error handler
+// Enhanced with centralized validation + shared error handler
 const tripsUpdateTrip = async (req, res) => {
   try {
     // Validate before updating
@@ -61,11 +61,11 @@ const tripsUpdateTrip = async (req, res) => {
       });
     }
 
-    // Attempt update
+    // Attempt update (runValidators ensures schema validation applies)
     const q = await Model.findOneAndUpdate(
       { code: req.params.tripCode },
       req.body,
-      { new: true }
+      { new: true, runValidators: true }
     ).exec();
 
     if (!q) {
@@ -79,9 +79,35 @@ const tripsUpdateTrip = async (req, res) => {
   }
 };
 
+// DELETE: /trips/:tripCode - delete a trip
+const tripsDeleteTrip = async (req, res) => {
+  try {
+    const deletedTrip = await Model.findOneAndDelete({
+      code: req.params.tripCode
+    }).exec();
+
+    if (!deletedTrip) {
+      return res.status(404).json({
+        status: "fail",
+        message: "Trip not found"
+      });
+    }
+
+    return res.status(200).json({
+      status: "success",
+      message: `Trip '${req.params.tripCode}' deleted successfully`,
+      deleted: deletedTrip
+    });
+
+  } catch (error) {
+    return handleError(res, error, "Error deleting trip");
+  }
+};
+
 module.exports = {
   tripsList,
   tripsFindByCode,
   tripsAddTrip,
-  tripsUpdateTrip
+  tripsUpdateTrip,
+  tripsDeleteTrip
 };

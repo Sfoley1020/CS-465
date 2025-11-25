@@ -55,21 +55,26 @@ export class TripDataService {
     );
   }
 
+  // NEW: deleteTrip() 
+  deleteTrip(tripCode: string): Observable<any> {
+    return this.http.delete(
+      `${this.baseUrl}/trips/${tripCode}`,
+      { headers: this.getAuthHeaders() }
+    );
+  }
+
   // LOGIN endpoint - returns JWT
   login(user: User, passwd: string): Observable<AuthResponse> {
-    // console.log('Inside TripDataService::login');
     return this.handleAuthAPICall('login', user, passwd);
   }
 
   // REGISTER endpoint - creates user and returns JWT
   register(user: User, passwd: string): Observable<AuthResponse> {
-    // console.log('Inside TripDataService::register');
     return this.handleAuthAPICall('register', user, passwd);
   }
 
   // Helper method for login/register
   private handleAuthAPICall(endpoint: string, user: User, passwd: string): Observable<AuthResponse> {
-    // console.log('Inside TripDataService::handleAuthAPICall');
     const formData = {
       name: user.name,
       email: user.email,

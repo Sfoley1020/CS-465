@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -12,9 +12,8 @@ import { User } from '../models/user';
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
-export class Login implements OnInit {
+export class Login {
   public formError: string = '';
-  submitted = false;
 
   credentials = {
     name: '',
@@ -24,40 +23,39 @@ export class Login implements OnInit {
 
   constructor(
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authService: AuthenticationService
   ) {}
 
-  ngOnInit(): void {}
-
-  // Handle submit
   public onLoginSubmit(): void {
     this.formError = '';
 
-    if (!this.credentials.name || !this.credentials.email || !this.credentials.password) {
-      this.formError = 'All fields are required, please try again.';
-      this.router.navigateByUrl('/login');
-    } else {
-      this.doLogin();
+    if (!this.credentials.email || !this.credentials.password || !this.credentials.name) {
+      this.formError = 'All fields are required.';
+      return;
     }
-  }
 
-  // Perform actual login call
-  private doLogin(): void {
-    const newUser: User = {
+    const user: User = {
       name: this.credentials.name,
       email: this.credentials.email
     };
 
-    // Call backend login endpoint
-    this.authenticationService.login(newUser, this.credentials.password);
+    this.authService.login(user, this.credentials.password)
+      .subscribe({
+        next: (resp) => {
+          this.authService.saveToken(resp.token);
 
-    // Wait for token to be saved, then redirect
-    setTimeout(() => {
-      if (this.authenticationService.isLoggedIn()) {
-        this.router.navigate(['']);
-      } else {
-        this.formError = 'Login failed. Please check your credentials.';
-      }
-    }, 2000);
+          const payload = this.authService.getCurrentUser();
+
+          if (payload?.admin === true) {
+            this.router.navigate(['/trips']);
+          } else {
+            this.formError = 'Access denied — Admins only.';
+            this.authService.logout();
+          }
+        },
+        error: () => {
+          this.formError = 'Login failed. Check your credentials.';
+        }
+      });
   }
 }

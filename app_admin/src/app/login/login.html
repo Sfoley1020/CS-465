@@ -2,14 +2,15 @@
   <div class="col-12 col-md-6">
     <h2 class="mb-4 text-center">Admin Login</h2>
 
+    <!-- Error message box -->
+    <div *ngIf="formError" class="alert alert-danger text-center" role="alert">
+      {{ formError }}
+    </div>
+
     <!-- Login Form -->
     <form (ngSubmit)="onLoginSubmit()" novalidate>
-      <!-- Error message -->
-      <div *ngIf="formError" class="alert alert-danger mb-3" role="alert">
-        {{ formError }}
-      </div>
 
-      <!-- Name field -->
+      <!-- Name -->
       <div class="mb-3">
         <label for="name" class="form-label">Name</label>
         <input
@@ -20,10 +21,11 @@
           placeholder="Enter your name"
           [(ngModel)]="credentials.name"
           required
+          (input)="formError = ''"
         />
       </div>
 
-      <!-- Email field -->
+      <!-- Email -->
       <div class="mb-3">
         <label for="email" class="form-label">Email Address</label>
         <input
@@ -34,10 +36,11 @@
           placeholder="Enter email address"
           [(ngModel)]="credentials.email"
           required
+          (input)="formError = ''"
         />
       </div>
 
-      <!-- Password field -->
+      <!-- Password -->
       <div class="mb-4">
         <label for="password" class="form-label">Password</label>
         <input
@@ -48,15 +51,17 @@
           placeholder="Enter password"
           [(ngModel)]="credentials.password"
           required
+          (input)="formError = ''"
         />
       </div>
 
-      <!-- Submit button -->
+      <!-- Submit -->
       <div class="d-grid">
         <button type="submit" class="btn btn-primary w-100">
           Sign In
         </button>
       </div>
+
     </form>
   </div>
 </div>
