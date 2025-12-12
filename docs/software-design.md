@@ -27,4 +27,5 @@ This enhancement directly supports the CS program outcome: “Demonstrate an abi
 	Overall, this enhancement strengthened my understanding of full-stack architecture, template rendering, and REST API integration. The result is a more scalable and maintainable system where the Travel page presents accurate, live data that matches the admin interface.
 This milestone significantly improves the design and functionality of the Travlr Getaways application. By enhancing the Travel page on the customer-facing site to consume live API data, I unified data flow across the application, reduced redundancy, and modernized the system’s architecture. This enhanced artifact will serve as a strong representation of my software engineering capabilities in my final ePortfolio.
 
+
 [← Back to Portfolio Home](index.html)
