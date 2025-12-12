@@ -3,7 +3,7 @@
 **Artifact:** Travlr Getaways – customer-facing Travel page and Express route/controller  
 **Original course:** CS-465 Full Stack Development with MEAN  
 **Capstone branch:** `capstone-module-3`  
-[View the original code on GitHub](https://github.com/Sfoley1020/CS-465/tree/main)
+[View the original code on GitHub](https://github.com/Sfoley1020/CS-465/tree/capstone-main)
 [View the enhanced code on GitHub](https://github.com/Sfoley1020/CS-465/tree/capstone-module-3)
 
 The artifact I selected for my software design and engineering enhancement is part of my Travlr Getaways full-stack web application, originally created in CS-465. This application includes an Angular-based admin dashboard, a customer-facing Express site, and a MongoDB database.
