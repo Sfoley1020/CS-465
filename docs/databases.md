@@ -11,13 +11,13 @@ The artifact I selected for my database enhancement is the Travlr Getaways full-
 
 I selected this artifact because it is the strongest evidence of my abilities working with databases, backend development, API integrity, and secure data handling. This artifact showcases my skills in:
 
-•	Designing and modifying Mongoose database schemas
-•	Implementing robust validation rules at the database layer
-•	Creating secure CRUD operations that protect data integrity
-•	Using JSON Web Tokens (JWT) for authenticated interactions
-•	Enforcing role-based access control (admin-only database operations)
-•	Centralizing validation logic using shared algorithms
-•	Debugging and resolving schema mismatches and missing fields
+-	Designing and modifying Mongoose database schemas
+-	Implementing robust validation rules at the database layer
+-	Creating secure CRUD operations that protect data integrity
+-	Using JSON Web Tokens (JWT) for authenticated interactions
+-	Enforcing role-based access control (admin-only database operations)
+-	Centralizing validation logic using shared algorithms
+-	Debugging and resolving schema mismatches and missing fields
 
 The enhancements significantly improved the quality of the backend database layer. The system now prevents malformed or incomplete data from being written to MongoDB. In addition, only authenticated admin users can modify or delete database records, which adds a critical security layer that the original version did not include. These improvements demonstrate my ability to design and refine real-world backend systems that align with industry standards.
 
@@ -29,9 +29,9 @@ In the module two, I planned to align this enhancement with the following outcom
 
 I fully met this outcome. My enhancements also contributed to two additional program outcomes:
 
-•	Develop a security mindset
+-	**Develop a security mindset:**
 I integrated role-based authorization and JWT authentication, preventing unauthorized access and strengthening backend security.
-•	Design and evaluate computing solutions using algorithmic principles
+-	**Design and evaluate computing solutions using algorithmic principles:**
 By creating a shared validation algorithm in validators.js, I improved both consistency and maintainability across multiple API endpoints.
 
 No changes to my outcome-coverage plan are needed.
