@@ -4,6 +4,7 @@
 **Original course:** CS-465 Full Stack Development with MEAN  
 **Capstone branch:** `capstone-module-4`  
 [View the original code on GitHub](https://github.com/Sfoley1020/CS-465/tree/capstone-main)
+
 [View the enhanced code on GitHub](https://github.com/Sfoley1020/CS-465/tree/capstone-module-4)
 
 The artifact I selected for Enhancement Two: Algorithms and Data Handling is the server-side trip management portion of my Travlr Getaways full-stack application, originally created in CS-465. This artifact includes the API logic responsible for adding, validating, and updating trip data stored in MongoDB. The original implementation performed minimal data checking and relied on repeated inline validation throughout the controller functions. This made the logic harder to maintain and increased the risk of inconsistent or incorrect data entering the system.
