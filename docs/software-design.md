@@ -9,19 +9,18 @@
 
 The artifact I selected for my software design and engineering enhancement is part of my Travlr Getaways full-stack web application, originally created in CS-465. This application includes an Angular-based admin dashboard, a customer-facing Express site, and a MongoDB database.
 
-The specific portion of the artifact enhanced for this milestone is the Travel page on the customer-facing site (`localhost:3000/travel`), along with its supporting Express route and controller logic. This page originally displayed only static HTML that did not reflect the live trip data stored in MongoDB. At the same time, the admin site (`localhost:4200`) already consumed dynamic, real-time data from the REST API.
+The specific portion of the artifact enhanced for this milestone is the Travel page on the customer-facing site (localhost:3000/travel), along with its supporting Express route and controller logic. This page originally displayed only static HTML that did not reflect the live trip data stored in MongoDB. At the same time, the admin site (localhost:4200) already consumed dynamic, real-time data from the REST API.
 
 This enhancement focuses solely on the Travel tab because it is the part of the customer site designed to display trip information and is directly tied to the same trip data used by the admin dashboard.
 
 I selected this artifact because it demonstrates my strongest skills in full-stack software engineering, including routing, API integration, component-based UI design, and backend architecture. It highlights my ability to work across the MEAN stack and transform a partially static prototype into a unified, dynamic, data-driven application.
 
 Key software engineering principles demonstrated include:
-
-- Separation of concerns through well-organized Angular components and Express controllers  
-- Centralized data access in the Angular service for maintainability  
-- REST API integration across two different front ends  
-- MVC architecture with Express routes, controllers, and Handlebars views  
-- Security-aware development, including JWT usage on the admin side  
+•	Separation of concerns through well-organized Angular components and Express controllers.
+•	Centralized data access in the Angular service for maintainability.
+•	REST API integration across two different front ends.
+•	MVC architecture with Express routes, controllers, and Handlebars views.
+•	Security-aware development, including JWT usage on the admin side.
 
 The enhancement improved the artifact by replacing the static Travel page with a dynamic Handlebars view that retrieves live trip data from the REST API. This ensures data consistency across the entire system and removes outdated static pages.
 
@@ -33,7 +32,7 @@ This enhancement directly supports the CS program outcome: “Demonstrate an abi
 
 By unifying the admin and customer systems around a single API, I strengthened the architecture and improved maintainability. I also met my planned Milestone One outcome of enhancing software design and engineering through meaningful refactoring and the removal of redundant static content.
 
-Through this enhancement, I learned how to refactor a legacy static route into a dynamic, API-driven page without disrupting the rest of the customer site. One challenge was discovering that a static `travel.html` file inside the public directory was overriding my dynamic Express route. Renaming or removing the static file allowed Express to correctly render the dynamic Handlebars template.
+Through this enhancement, I learned how to refactor a legacy static route into a dynamic, API-driven page without disrupting the rest of the customer site. One challenge was discovering that a static travel.html file inside the public directory was overriding my dynamic Express route. Renaming or removing the static file allowed Express to correctly render the dynamic Handlebars template.
 
 Another challenge involved ensuring the Express controller used the same data format expected by the Angular admin site. This required reviewing and aligning the API response structure so that both front ends consumed consistent data.
 
