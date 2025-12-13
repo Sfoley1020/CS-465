@@ -15,20 +15,20 @@ I chose this artifact for my ePortfolio because it demonstrates my ability to ap
 
 This artifact highlights several important skills:
 
-•	Designing and implementing a modular validation algorithm
-•	Applying decision logic to enforce consistent business rules
-•	Creating a shared error-handling structure for predictable API behavior
-•	Strengthening data integrity across all API operations
-•	Reducing redundancy and improving maintainability
-•	Ensuring validated data is displayed correctly in the Angular UI
+-	Designing and implementing a modular validation algorithm
+-	Applying decision logic to enforce consistent business rules
+-	Creating a shared error-handling structure for predictable API behavior
+-	Strengthening data integrity across all API operations
+-	Reducing redundancy and improving maintainability
+-	Ensuring validated data is displayed correctly in the Angular UI
 
 To begin the enhancement, I created a new file, validators.js, which includes the reusable function validateTripInput(data). This algorithm:
 
-•	Validates trip codes
-•	Ensures all required fields are present
-•	Confirms that numerical values (such as length and perPerson) are positive
-•	Checks formatting for dates, descriptions, and image names
-•	Aggregates all validation issues into a single array
+-	Validates trip codes
+-	Ensures all required fields are present
+-	Confirms that numerical values (such as length and perPerson) are positive
+-	Checks formatting for dates, descriptions, and image names
+-	Aggregates all validation issues into a single array
 
 This change replaces multiple scattered checks with one centralized and structured set of rules. When designing this validator, I considered other options such as relying only on Mongoose schema validation or adding separate Express middleware for each route. I chose a centralized validation function because it keeps all the business rules in one place, makes it easier to update them as requirements change, and allows the same logic to be reused across multiple endpoints. For the size and scope of this project, that tradeoff made more sense than spreading validation logic across several layers, and it gave me clearer control over exactly how each rule is applied.
 
@@ -44,11 +44,11 @@ I then updated the tripsAddTrip and tripsUpdateTrip controller functions to foll
 These updates improved both the reliability and readability of the system.
 After implementing the enhancements, I thoroughly tested my work using Postman. I verified:
 
-•	Successful POST and PUT operations
-•	Proper handling of missing-field errors
-•	Correct rejection of invalid or negative numerical values
-•	Behavior when incorrect data structures were submitted
-•	Enforced JWT authentication for protected routes
+-	Successful POST and PUT operations
+-	Proper handling of missing-field errors
+-	Correct rejection of invalid or negative numerical values
+-	Behavior when incorrect data structures were submitted
+-	Enforced JWT authentication for protected routes
 
 These tests confirmed that both the validation algorithm and error-handling logic behaved as expected.  Because these routes are behind JWT-based authentication, the validator also serves as an additional defense layer against malformed or potentially malicious inputs. It prevents bad data from reaching the database and supports the program outcome focused on developing a security mindset. While testing the enhanced data flow, I also corrected a formatting issue in trip-card.html so that validated data (such as trip length and price) appeared consistently with the rest of the application. This was necessary because the validator guarantees clean input, and the UI should accurately reflect that structure.
 
@@ -60,6 +60,5 @@ By implementing a reusable algorithm for validation and reorganizing the control
 One challenge I faced was ensuring that refactoring the backend did not break existing functionality. I had to test several combinations of valid and invalid inputs to make sure the algorithm behaved correctly. Another challenge was identifying why a newly added trip card displayed incorrectly in Angular. This required debugging both the data and the UI formatting, which helped me better understand the relationship between backend validation and frontend rendering.
 
 Overall, this enhancement strengthened my understanding of how algorithm design, validation logic, and structured data handling all work together to produce cleaner and more reliable software. It also reinforced my ability to think critically about system behavior and to design solutions that scale as business rules change. Working with centralized validation, standardized error handling, and authenticated routes gave me practical experience with patterns I will need in professional backend development, especially in environments where reliability, security, and clear communication with teammates are all important.
-
 
 [← Back to Portfolio Home](index.html)
