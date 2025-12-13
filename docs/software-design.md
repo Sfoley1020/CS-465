@@ -16,6 +16,7 @@ This enhancement focuses solely on the Travel tab because it is the part of the 
 I selected this artifact because it demonstrates my strongest skills in full-stack software engineering, including routing, API integration, component-based UI design, and backend architecture. It highlights my ability to work across the MEAN stack and transform a partially static prototype into a unified, dynamic, data-driven application.
 
 Key software engineering principles demonstrated include:
+
 -	Separation of concerns through well-organized Angular components and Express controllers.
 -	Centralized data access in the Angular service for maintainability.
 -	REST API integration across two different front ends.
