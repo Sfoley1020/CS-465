@@ -31,6 +31,7 @@ I fully met this outcome. My enhancements also contributed to two additional pro
 
 -	**Develop a security mindset:**
 I integrated role-based authorization and JWT authentication, preventing unauthorized access and strengthening backend security.
+
 -	**Design and evaluate computing solutions using algorithmic principles:**
 By creating a shared validation algorithm in validators.js, I improved both consistency and maintainability across multiple API endpoints.
 
