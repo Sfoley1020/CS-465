@@ -16,11 +16,11 @@ This enhancement focuses solely on the Travel tab because it is the part of the 
 I selected this artifact because it demonstrates my strongest skills in full-stack software engineering, including routing, API integration, component-based UI design, and backend architecture. It highlights my ability to work across the MEAN stack and transform a partially static prototype into a unified, dynamic, data-driven application.
 
 Key software engineering principles demonstrated include:
-•	Separation of concerns through well-organized Angular components and Express controllers.
-•	Centralized data access in the Angular service for maintainability.
-•	REST API integration across two different front ends.
-•	MVC architecture with Express routes, controllers, and Handlebars views.
-•	Security-aware development, including JWT usage on the admin side.
+-	Separation of concerns through well-organized Angular components and Express controllers.
+-	Centralized data access in the Angular service for maintainability.
+-	REST API integration across two different front ends.
+-	MVC architecture with Express routes, controllers, and Handlebars views.
+-	Security-aware development, including JWT usage on the admin side.
 
 The enhancement improved the artifact by replacing the static Travel page with a dynamic Handlebars view that retrieves live trip data from the REST API. This ensures data consistency across the entire system and removes outdated static pages.
 
@@ -41,6 +41,5 @@ After completing this software design enhancement, the next planned steps for th
 Overall, this enhancement strengthened my understanding of full-stack architecture, template rendering, and REST API integration. The result is a more scalable and maintainable system where the Travel page presents accurate, live data that matches the admin interface.
 
 This milestone significantly improves the design and functionality of the Travlr Getaways application. By enhancing the Travel page on the customer-facing site to consume live API data, I unified data flow across the application, reduced redundancy, and modernized the system’s architecture. This enhanced artifact will serve as a strong representation of my software engineering capabilities in my final ePortfolio.
-
 
 [← Back to Portfolio Home](index.html)
